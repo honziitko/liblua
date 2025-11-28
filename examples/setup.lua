@@ -23,10 +23,8 @@ local modules = lookupIfExists(build, "modules")
 moveTable(_G, oldGlobals)
 
 if modules then
-    if not package.loaded then
-        package.loaded = {}
-    end
-    for libname, filename in pairs(modules) do
-        package.loaded[libname] = dofile(filename)
+    for modname, filename in pairs(modules) do
+        local loader = function() return dofile(filename) end
+        package.preload[modname] = loader
     end
 end
