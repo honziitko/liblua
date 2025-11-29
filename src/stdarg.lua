@@ -23,6 +23,7 @@ local M = {}
 local utils = require("liblua.utils")
 local CALLER = utils.CALLER
 local mem = require("liblua.internal.memory")
+local readgarbage = require("liblua.internal.readgarbage")
 
 require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
 
@@ -74,10 +75,10 @@ end
 --- is undefined.
 function M.va_arg(ap, T)
     if not ap.valid then
-        return mem.readgarbage.derefOf(T)
+        return readgarbage.derefOf(T)
     end
     if ap.iterator > #ap.data then
-        return mem.readgarbage.of(T)
+        return readgarbage.of(T)
     end
     local val = ap.data[ap.iterator]
     ap.iterator = ap.iterator + 1
