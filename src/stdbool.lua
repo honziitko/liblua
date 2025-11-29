@@ -26,7 +26,8 @@ local M = {}
 local versions = require("liblua.internal.versions")
 versions.assert(versions.C95, nil)
 
-M._Bool = "boolean"
+require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
+
 M.bool = M._Bool
 
 return M

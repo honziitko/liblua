@@ -24,6 +24,8 @@ SEE ALSO
 local M = {}
 local mem = require("liblua.internal.memory")
 
+require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
+
 function M.strlen(s)
     local defined = string.find(s, "\0")
     if defined then

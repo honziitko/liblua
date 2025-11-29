@@ -18,6 +18,7 @@ build = {
         ["liblua.stdarg.h"] = "src/stdarg.lua",
         ["liblua.string.h"] = "src/string.lua",
         ["liblua.stdbool.h"] = "src/stdbool.lua",
+        ["liblua.intrdef.h"] = "src/intrdef.lua",
         ["liblua.utils"] = "src/internal/utils.lua",
         ["liblua.internal.memory"] = "src/internal/memory.lua",
         ["liblua.internal.readgarbage"] = "src/internal/readgarbage.lua",

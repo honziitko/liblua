@@ -24,6 +24,8 @@ local utils = require("liblua.utils")
 local CALLER = utils.CALLER
 local mem = require("liblua.internal.memory")
 
+require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
+
 ---@class va_list
 ---@field package valid boolean
 ---@field package data any[]
