@@ -23,6 +23,12 @@ function M.bitcast(x, U)
     if T == U then
         return x
     end
+    if T == "number" and U == "boolean" then
+        return x ~= 0
+    end
+    if T == "boolean" and U == "number" then
+        return (x and 1) or 0
+    end
     local TClass = classifyType(T)
     local UClass = classifyType(U)
     if TClass == "pointer" and UClass == "value" then
