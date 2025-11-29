@@ -1,6 +1,6 @@
 local M = {}
-
-local CALLER = 2
+local utils = require("liblua.utils")
+local CALLER = utils.CALLER
 
 ---@class va_list
 ---@field package valid boolean

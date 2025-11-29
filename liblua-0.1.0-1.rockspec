@@ -15,6 +15,7 @@ build = {
     type = "builtin",
     modules = {
         liblua = "src/main.lua",
+        ["liblua.utils"] = "src/utils.lua",
         ["liblua.stdarg.h"] = "src/stdarg.lua",
     }
 }
