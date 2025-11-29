@@ -2,6 +2,14 @@
 local M = {}
 M.readgarbage = require("liblua.internal.readgarbage")
 
+M.PAGESIZE = 4096 -- 4 kB
+
+---@param addr integer
+---@return integer
+function M.pageEnd(addr)
+    return M.PAGESIZE * math.ceil(addr / M.PAGESIZE)
+end
+
 function M.addressOf(x)
     return tonumber(tostring(x):match("0x%x+"))
 end
