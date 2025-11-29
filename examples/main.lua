@@ -1,13 +1,23 @@
 local liblua = require("liblua")
 liblua.include("stdarg.h")
 
-local function foo(x, y, ...)
+local function foo(x, ...)
     local ap = va_list()
-    va_start(ap, "y")
+    va_start(ap, "x")
+    for _ = 1, 5 do
+        print(va_arg(ap, "string"))
+    end
+    va_end(ap)
+end
+
+local function bar(x, ...)
+    local ap = va_list()
+    va_start(ap, "x")
     for _ = 1, 2 do
         print(va_arg(ap, "number"))
     end
     va_end(ap)
 end
 
-foo(1, 2, { 3 }, { 4 })
+foo("A", "B", "C", "D")
+bar("A", "B", "C", "D")
