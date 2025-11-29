@@ -20,4 +20,5 @@ local function bar(x, ...)
 end
 
 foo("A", "B", "C", "D")
-bar("A", "B", "C", "D")
+print("AAA")
+bar("A", { 2 }, foo, false)
