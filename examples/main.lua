@@ -10,4 +10,4 @@ local function foo(x, y, ...)
     va_end(ap)
 end
 
-foo(1, 2, 67, 41)
+foo(1, 2, { 3 }, { 4 })

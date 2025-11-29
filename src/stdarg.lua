@@ -1,6 +1,7 @@
 local M = {}
 local utils = require("liblua.utils")
 local CALLER = utils.CALLER
+local mem = require("liblua.internal.memory")
 
 ---@class va_list
 ---@field package valid boolean
@@ -42,8 +43,7 @@ function M.va_arg(ap, T)
     assert(ap.iterator <= #ap.data)
     local val = ap.data[ap.iterator]
     ap.iterator = ap.iterator + 1
-    assert(type(val) == T)
-    return val
+    return mem.bitcast(val, T)
 end
 
 ---@param ap va_list
