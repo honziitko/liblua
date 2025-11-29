@@ -1,5 +1,6 @@
 ---@module "liblua.internal.memory"
 local M = {}
+M.readgarbage = require("liblua.internal.readgarbage")
 
 function M.addressOf(x)
     return tonumber(tostring(x):match("0x%x+"))

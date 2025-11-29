@@ -71,8 +71,12 @@ end
 --- /\*type\*/ is not compatible with the value provided, the behaviour
 --- is undefined.
 function M.va_arg(ap, T)
-    assert(ap.valid)
-    assert(ap.iterator <= #ap.data)
+    if not ap.valid then
+        return mem.readgarbage.of(T)
+    end
+    if ap.iterator > #ap.data then
+        return mem.readgarbage.of(T)
+    end
     local val = ap.data[ap.iterator]
     ap.iterator = ap.iterator + 1
     return mem.bitcast(val, T)
