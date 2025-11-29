@@ -19,6 +19,7 @@ local function bar(x, ...)
     va_end(ap)
 end
 
+print("foo:")
 foo("A", "B", "C", "D")
-print("AAA")
+print("bar:")
 bar("A", { 2 }, foo, false)
