@@ -1,3 +1,4 @@
+---@module "liblua.utils"
 local M = {}
 M.CALLER = 2
 

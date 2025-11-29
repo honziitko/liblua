@@ -1,3 +1,4 @@
+---@module "liblua"
 local M = {}
 local utils = require("liblua.utils")
 

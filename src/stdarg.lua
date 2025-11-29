@@ -18,6 +18,7 @@ SEE ALSO
     va_list(7), va_copy(3), va_end(3), va_start(3)
 --]]
 
+---@module "liblua.stdarg.h"
 local M = {}
 local utils = require("liblua.utils")
 local CALLER = utils.CALLER

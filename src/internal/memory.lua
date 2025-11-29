@@ -1,3 +1,4 @@
+---@module "liblua.internal.memory"
 local M = {}
 
 function M.addressOf(x)
