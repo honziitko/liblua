@@ -23,6 +23,9 @@ SEE ALSO
 ---@module "liblua.stdbool.h"
 local M = {}
 
+local versions = require("liblua.internal.versions")
+versions.assert(versions.C95, nil)
+
 M._Bool = "boolean"
 M.bool = M._Bool
 
