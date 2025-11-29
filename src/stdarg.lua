@@ -1,3 +1,23 @@
+--[[
+NAME
+    stdarg.h - Variadic arguments for the Lua language
+
+SYNOPSIS
+    typedef /* implementation defined */ va_list;
+    /*type*/ va_arg(va_list ap, /*type*/);
+    void va_copy(va_list dest, va_list src);
+    void va_end(va_list ap);
+    void va_start(va_list ap, parmN);
+
+DESCRIPTION
+    Enabled access to variadic arguments.
+
+SEE ALSO
+    Full documentation <https://cppreference.com/w/c/header/stdarg.html>
+
+    va_list(7), va_copy(3), va_end(3), va_start(3)
+--]]
+
 local M = {}
 local utils = require("liblua.utils")
 local CALLER = utils.CALLER
@@ -18,6 +38,12 @@ end
 
 ---@param ap va_list
 ---@param paramN string
+--- void va_start(va_list ap, parmN)
+---
+--- Initializes a va_list using the last named parameter.
+---
+--- NOTES
+--- Does not conform to the Lua 5.5 revision.
 function M.va_start(ap, paramN)
     ap.valid = true
     ap.iterator = 1
@@ -38,6 +64,11 @@ end
 ---@param ap va_list
 ---@param T string
 ---@return any
+--- /\*type\*/ va_arg(va_list ap, /\*type\*/)
+---
+--- Retrieves an argument from ap. If ap is empty, uninitialized, or
+--- /\*type\*/ is not compatible with the value provided, the behaviour
+--- is undefined.
 function M.va_arg(ap, T)
     assert(ap.valid)
     assert(ap.iterator <= #ap.data)
@@ -47,6 +78,9 @@ function M.va_arg(ap, T)
 end
 
 ---@param ap va_list
+--- void va_end(va_list ap)
+---
+--- Frees a va_list.
 function M.va_end(ap)
 end
 
