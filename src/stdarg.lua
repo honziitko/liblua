@@ -22,7 +22,7 @@ SEE ALSO
 local M = {}
 local utils = require("liblua.utils")
 local CALLER = utils.CALLER
-local mem = require("liblua.internal.memory")
+local memory = require("liblua.internal.memory")
 local readgarbage = require("liblua.internal.readgarbage")
 
 require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
@@ -82,7 +82,7 @@ function M.va_arg(ap, T)
     end
     local val = ap.data[ap.iterator]
     ap.iterator = ap.iterator + 1
-    return mem.bitcast(val, T)
+    return memory.bitcast(val, T)
 end
 
 ---@param ap va_list

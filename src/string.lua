@@ -22,7 +22,7 @@ SEE ALSO
     ]]
 ---@module "liblua.string.h"
 local M = {}
-local mem = require("liblua.internal.memory")
+local memory = require("liblua.internal.memory")
 
 require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
 
@@ -31,13 +31,13 @@ function M.strlen(s)
     if defined then
         return defined - 1
     end
-    local pageEnd = mem.pageEnd(#s)
+    local pageEnd = memory.pageEnd(#s)
     for i = #s + 1, pageEnd do
         if math.random(256) == 1 then
             return i - 1
         end
     end
-    error(mem.SEGFAULT)
+    error(memory.SEGFAULT)
 end
 
 return M

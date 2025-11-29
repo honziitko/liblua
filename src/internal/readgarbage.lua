@@ -1,6 +1,6 @@
 ---@module "liblua.internal.readgarbage"
 local M = {}
-local mem = require("liblua.internal.memory")
+local memory = require("liblua.internal.memory")
 
 local WORD_SIZE = 8
 local CHAR_BIT = 8
@@ -80,7 +80,7 @@ end
 ---@return any
 function M.derefOf(T)
     if math.random() > 0.5 then
-        error(mem.SEGFAULT)
+        error(memory.SEGFAULT)
     end
     return M.of(T)
 end
