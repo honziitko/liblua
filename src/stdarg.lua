@@ -3,9 +3,9 @@ local M = {}
 local CALLER = 2
 
 ---@class va_list
----@field private valid boolean
----@field private data any[]
----@field private iterator integer
+---@field package valid boolean
+---@field package data any[]
+---@field package iterator integer
 
 ---@return va_list
 function M.va_list()
