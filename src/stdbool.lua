@@ -29,5 +29,6 @@ versions.assert(versions.C95, nil)
 require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
 
 M.bool = M._Bool
+M.__bool_true_false_are_defined = true
 
 return M
