@@ -3,6 +3,7 @@ local M = {}
 M.readgarbage = require("liblua.internal.readgarbage")
 
 M.PAGESIZE = 4096 -- 4 kB
+M.SEGFAULT = "Segmentation fault (core dumped)"
 
 ---@param addr integer
 ---@return integer

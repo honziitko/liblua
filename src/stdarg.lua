@@ -74,7 +74,7 @@ end
 --- is undefined.
 function M.va_arg(ap, T)
     if not ap.valid then
-        return mem.readgarbage.of(T)
+        return mem.readgarbage.derefOf(T)
     end
     if ap.iterator > #ap.data then
         return mem.readgarbage.of(T)
@@ -89,6 +89,7 @@ end
 ---
 --- Frees a va_list.
 function M.va_end(ap)
+    ap.valid = false
 end
 
 return M

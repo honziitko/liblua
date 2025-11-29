@@ -1,5 +1,6 @@
 ---@module "liblua.internal.readgarbage"
 local M = {}
+local mem = require("liblua.internal.memory")
 
 local WORD_SIZE = 8
 local CHAR_BIT = 8
@@ -54,8 +55,8 @@ function M.value()
     end
 end
 
----@return any
 ---@param T string
+---@return any
 function M.of(T)
     if T == "number" then
         return int()
@@ -73,6 +74,15 @@ function M.of(T)
     else
         error("Unsupported type: " .. T)
     end
+end
+
+---@param T string
+---@return any
+function M.derefOf(T)
+    if math.random() > 0.5 then
+        error(mem.SEGFAULT)
+    end
+    return M.of(T)
 end
 
 return M

@@ -37,7 +37,7 @@ function M.strlen(s)
             return i - 1
         end
     end
-    error("Segmentation fault (core dumped)")
+    error(mem.SEGFAULT)
 end
 
 return M
