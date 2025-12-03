@@ -14,3 +14,8 @@ local dest = array(4, 0)
 print(table.concat(dest, ", "))
 memset(dest, 42, #dest)
 print(table.concat(dest, ", "))
+
+for i = 1, 5 do
+    local dest = { 1 }
+    memset(dest, 0, 1024) -- WARNING: Likely will loop forever
+end

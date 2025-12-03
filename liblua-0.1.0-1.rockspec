@@ -22,6 +22,7 @@ build = {
         ["liblua.utils"] = "src/internal/utils.lua",
         ["liblua.internal.memory"] = "src/internal/memory.lua",
         ["liblua.internal.readgarbage"] = "src/internal/readgarbage.lua",
+        ["liblua.internal.writegarbage"] = "src/internal/writegarbage.lua",
         ["liblua.internal.versions"] = "src/internal/versions.lua",
     }
 }

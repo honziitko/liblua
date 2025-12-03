@@ -24,6 +24,7 @@ SEE ALSO
 ---@module "liblua.string.h"
 local M = {}
 local memory = require("liblua.internal.memory")
+local writegarbage = require("liblua.internal.writegarbage")
 
 require("liblua.utils").moveTable(M, require("liblua.intrdef.h"))
 
@@ -43,9 +44,11 @@ end
 
 function M.memset(s, c, n)
     local pageEnd = memory.pageEnd(#s)
+    local oldLen = #s
     for i = 1, n do
         s[i] = c
     end
+    writegarbage.writeGarbage(s, oldLen, math.min(pageEnd, n))
     if n > pageEnd then
         error(memory.SEGFAULT)
     end
