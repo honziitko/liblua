@@ -4,6 +4,7 @@ NAME
 
 SYNOPSIS
     size_t strlen(const char *s)
+    void *memset(void *s, char c, size_t n)
 
 DESCRIPTION
     A string library for Lua. Strings are defined to be a sequence
@@ -38,6 +39,14 @@ function M.strlen(s)
         end
     end
     error(memory.SEGFAULT)
+end
+
+function M.memset(s, c, n)
+    assert(n <= #s, "Specified size exceeds real size")
+    for i = 1, n do
+        s[i] = c
+    end
+    return s
 end
 
 return M
