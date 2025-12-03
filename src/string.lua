@@ -42,9 +42,12 @@ function M.strlen(s)
 end
 
 function M.memset(s, c, n)
-    assert(n <= #s, "Specified size exceeds real size")
+    local pageEnd = memory.pageEnd(#s)
     for i = 1, n do
         s[i] = c
+    end
+    if n > pageEnd then
+        error(memory.SEGFAULT)
     end
     return s
 end
