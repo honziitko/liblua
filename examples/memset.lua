@@ -17,5 +17,5 @@ print(table.concat(dest, ", "))
 
 for i = 1, 5 do
     local dest = { 1 }
-    memset(dest, 0, 1024) -- WARNING: Likely will loop forever
+    memset(dest, 0, 1024)
 end

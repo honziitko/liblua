@@ -2,6 +2,47 @@
 local M = {}
 local memory = require("liblua.internal.memory")
 local utils = require("liblua.utils")
+local readgarbage = require("liblua.internal.readgarbage")
+
+local function isArrayIndex(x)
+    if type(x) ~= "number" then return false end
+    if x < 1 then return false end
+    return x % 1 == 0
+end
+
+---@enum TableType
+local TableType = {
+    array = 1,
+    hashmap = 2,
+}
+
+---@return TableType
+local function classifyTable(t)
+    local size = #t
+    local occupancy = 0
+    for i = 1, size do
+        if t[i] ~= nil then
+            occupancy = occupancy + 1
+        end
+    end
+    if size > 0 and (occupancy / size) < 0.4 then
+        -- Likely a map with integers as keys
+        return TableType.hashmap
+    end
+    local numNonArrayKeys = 0
+    for k, v in pairs(t) do
+        if not isArrayIndex(k) then
+            numNonArrayKeys = numNonArrayKeys + 1
+        end
+    end
+    if size < numNonArrayKeys then
+        return TableType.hashmap
+    end
+    if size > numNonArrayKeys then
+        return TableType.array
+    end
+    return math.random(2)
+end
 
 ---@param dest any[] Object to be overwritten
 ---@param data table Data
@@ -9,11 +50,45 @@ local utils = require("liblua.utils")
 ---@param remaining integer Remaining garbage
 ---@return integer Amount of garbage written
 local function overwriteObj(dest, data, start, remaining)
-    local n = math.min(#dest, remaining)
-    for i = 1, n do
-        dest[i] = data[start + i]
+    local class = classifyTable(dest)
+    if class == TableType.array then
+        local n = math.min(#dest, remaining)
+        for i = 1, n do
+            dest[i] = data[start + i]
+        end
+        return n
+    elseif class == TableType.hashmap then
+        local pairsAvailableDest = 0
+        local tailKey = nil
+        for key, _ in pairs(dest) do
+            if remaining < (pairsAvailableDest + 1) then
+                tailKey = key
+                break
+            end
+            dest[key] = nil
+            pairsAvailableDest = pairsAvailableDest + 1
+        end
+        local pairsAvailableSrc = math.floor(remaining / 2)
+        local pairsAvailable = math.min(pairsAvailableDest, pairsAvailableSrc)
+        for i = 1, 2 * pairsAvailable - 1, 2 do
+            local newKey = data[start + i]
+            local newVal = data[start + i + 1]
+            dest[newKey] = newVal
+        end
+        if remaining % 2 ~= 0 then
+            local i = 0
+            local writtenKey = data[start + remaining]
+            if tailKey then
+                dest[writtenKey] = dest[tailKey]
+                dest[tailKey] = nil
+            else
+                dest[writtenKey] = readgarbage.value()
+            end
+        end
+        return remaining
+    else
+        error("Unreachable")
     end
-    return n
 end
 
 ---Return value is corrected for the invokation of the function itself
