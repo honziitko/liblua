@@ -47,8 +47,11 @@ local function preprocess(source, filename)
         return source
     end
     local out = source
-    for name, value in pairs(defs) do
-        out = out:gsub(gsubEscape(name), value)
+    local wordBoundary = "[^_%w]"
+    for rawName, rawValue in pairs(defs) do
+        local name = gsubEscape(rawName)
+        local value = gsubEscape(rawValue)
+        out = out:gsub(wordBoundary .. name .. wordBoundary, value)
     end
     return out
 end
