@@ -51,7 +51,8 @@ local function preprocess(source, filename)
     for rawName, rawValue in pairs(defs) do
         local name = gsubEscape(rawName)
         local value = gsubEscape(rawValue)
-        out = out:gsub(wordBoundary .. name .. wordBoundary, value)
+        local pattern = string.format("(%s)%s(%s)", wordBoundary, name, wordBoundary)
+        out = out:gsub(pattern, "%1" .. value .. "%2")
     end
     return out
 end
